@@ -1,5 +1,7 @@
 # Behave
 
+[![Build Status](https://travis-ci.org/Netmosfera/Behave.svg?branch=master)](https://travis-ci.org/Netmosfera/Behave)
+
 Behavior verification tools.
 
 Given a log of interactions performed on some objects, this library allows to verify that

@@ -10,6 +10,7 @@ use function array_values;
 use function Netmosfera\Behave\get;
 use function Netmosfera\Behave\same;
 use function Netmosfera\Behave\every;
+use Netmosfera\Behave\Verification\Interactions\CannotFulfill;
 use Netmosfera\Behave\Log\GetInteraction;
 use PHPUnit\Framework\TestCase;
 
@@ -29,6 +30,19 @@ class EveryInteractionConstraintTest extends TestCase
     }
 
     //[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]
+
+    function test_exception_bubbles_up(){
+        $this->expectException(CannotFulfill::CLASS);
+
+        $interactions[0] = new GetInteraction("@", "@", "@", FALSE);
+        $interactions[1] = new GetInteraction("#", "#", "#", FALSE);
+
+        $constraint = every([
+            get("@", "@", same("@"), FALSE, FALSE),
+            get("§", "§", same("§"), FALSE, FALSE),
+        ], FALSE);
+        $result = $constraint->fulfill($interactions);
+    }
 
     function test_fulfill(){
         $interactions[0] = new GetInteraction("@", "@", "@", FALSE);

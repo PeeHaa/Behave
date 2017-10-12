@@ -18,7 +18,7 @@ class EveryInteractionConstraint implements InteractionConstraint
     /**
      * @TODOC
      *
-     * @var         InteractionConstraint[]                                                 `Array<@TODO>`
+     * @var         InteractionConstraint[]                                                 `Array<Int, InteractionConstraint>`
      */
     private $constraints;
 
@@ -32,7 +32,7 @@ class EveryInteractionConstraint implements InteractionConstraint
     /**
      * @throws
      *
-     * @param       InteractionConstraint[]                 $constraints                    `Array<@TODO>`
+     * @param       InteractionConstraint[]                 $constraints                    `Array<Int, InteractionConstraint>`
      * @TODOC
      *
      * @param       Bool                                    $eatPreviousInteractions        `Bool`

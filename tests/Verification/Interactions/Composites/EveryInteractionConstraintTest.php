@@ -5,13 +5,14 @@ namespace Netmosfera\BehaveTests\Verification\Interactions\Composites;
 //[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]
 
 use function array_filter;
-use function array_splice;
 use function array_values;
+use Error;
 use function Netmosfera\Behave\get;
 use function Netmosfera\Behave\same;
 use function Netmosfera\Behave\every;
 use Netmosfera\Behave\Verification\Interactions\CannotFulfill;
 use Netmosfera\Behave\Log\GetInteraction;
+use Netmosfera\Behave\Verification\Interactions\InteractionConstraint;
 use PHPUnit\Framework\TestCase;
 
 //[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]
@@ -30,6 +31,14 @@ class EveryInteractionConstraintTest extends TestCase
     }
 
     //[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]
+
+    function test_throws_if_less_than_two_constraints_are_given_to_the_ctor(){
+        $this->expectException(Error::CLASS);
+
+        every([
+            get("@", "@", same("@"), FALSE, FALSE)
+        ], FALSE);
+    }
 
     function test_exception_bubbles_up(){
         $this->expectException(CannotFulfill::CLASS);

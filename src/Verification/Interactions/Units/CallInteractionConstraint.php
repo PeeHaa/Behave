@@ -28,7 +28,7 @@ class CallInteractionConstraint implements InteractionConstraint
     /**
      * @TODOC
      *
-     * @var         ObjectConstraint[]                                                      `Array<@TODO>`
+     * @var         ObjectConstraint[]                                                      `Array<Int, ObjectConstraint>`
      */
     private $argumentsConstraints;
 
@@ -57,7 +57,7 @@ class CallInteractionConstraint implements InteractionConstraint
      * @param       Closure                                 $closure                        `Closure`
      * @TODOC
      *
-     * @param       ObjectConstraint[]                      $argumentsConstraints           `Array<@TODO>`
+     * @param       ObjectConstraint[]                      $argumentsConstraints           `Array<Int, ObjectConstraint>`
      * @TODOC
      *
      * @param       ObjectConstraint                        $resultConstraint               `ObjectConstraint`

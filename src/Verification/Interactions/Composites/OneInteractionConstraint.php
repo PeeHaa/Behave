@@ -4,6 +4,7 @@ namespace Netmosfera\Behave\Verification\Interactions\Composites;
 
 //[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]
 
+use Error;
 use Netmosfera\Behave\Verification\Interactions\InteractionConstraint;
 use Netmosfera\Behave\Verification\Interactions\CannotFulfill;
 use Netmosfera\Behave\Verification\Interactions\Result;
@@ -18,7 +19,7 @@ class OneInteractionConstraint implements InteractionConstraint
     /**
      * @TODOC
      *
-     * @var         InteractionConstraint[]                                                 `Array<@TODO>`
+     * @var         InteractionConstraint[]                                                 `Array<Int, InteractionConstraint>`
      */
     private $constraints;
 
@@ -30,13 +31,18 @@ class OneInteractionConstraint implements InteractionConstraint
     private $eatPreviousInteractions;
 
     /**
-     * @param       InteractionConstraint[]                 $constraints                    `Array<@TODO>`
+     * @throws
+     *
+     * @param       InteractionConstraint[]                 $constraints                    `Array<Int, InteractionConstraint>`
      * @TODOC
      *
      * @param       Bool                                    $eatPreviousInteractions        `Bool`
      * @TODOC
      */
     function __construct(array $constraints, Bool $eatPreviousInteractions){
+        if(count($constraints) < 2){
+            throw new Error("At least two constraints must be provided");
+        }
         $this->constraints = $constraints;
         $this->eatPreviousInteractions = $eatPreviousInteractions;
     }

@@ -34,6 +34,16 @@ class CallInteractionConstraintTest extends TestCase
         $constraint->fulfill($interactions);
     }
 
+    function test_cannot_fulfill_if_arguments_count_does_not_match(){
+        $this->expectException(CannotFulfill::CLASS);
+
+        $c = function(){};
+        $interactions[] = new CallInteraction($c, [555, 666], NULL, FALSE);
+
+        $constraint = call($c, [same(666)], same(NULL), FALSE, FALSE);
+        $constraint->fulfill($interactions);
+    }
+
     function test_cannot_fulfill_if_arguments_do_not_match(){
         $this->expectException(CannotFulfill::CLASS);
 

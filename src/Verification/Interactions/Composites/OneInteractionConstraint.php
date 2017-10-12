@@ -19,7 +19,7 @@ class OneInteractionConstraint implements InteractionConstraint
     /**
      * @TODOC
      *
-     * @var         InteractionConstraint[]                                                 `Array<Int, InteractionConstraint>`
+     * @var         InteractionConstraint[]                                                 `Array<Int{NonNegative}, InteractionConstraint>`
      */
     private $constraints;
 
@@ -33,7 +33,7 @@ class OneInteractionConstraint implements InteractionConstraint
     /**
      * @throws
      *
-     * @param       InteractionConstraint[]                 $constraints                    `Array<Int, InteractionConstraint>`
+     * @param       InteractionConstraint[]                 $constraints                    `Array<Int{NonNegative}, InteractionConstraint>`
      * @TODOC
      *
      * @param       Bool                                    $eatPreviousInteractions        `Bool`
@@ -53,12 +53,12 @@ class OneInteractionConstraint implements InteractionConstraint
             try{
                 $result = $expectation->fulfill($interactions);
                 if($this->eatPreviousInteractions){
-                    if($result->continueIndex === 0){
+                    if($result->remainingInteractionsCount === 0){
                         $interactions = [];
                     }else{
-                        $interactions = array_slice($result->interactions, $result->continueIndex);
+                        $interactions = array_slice($result->interactions, $result->remainingInteractionsCount * -1);
                     }
-                    return new Result($interactions, $result->continueIndex);
+                    return new Result($interactions, $result->remainingInteractionsCount);
                 }else{
                     return $result;
                 }

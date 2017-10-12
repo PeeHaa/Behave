@@ -92,13 +92,15 @@ class SetInteractionConstraint implements InteractionConstraint
                 $this->contentConstraint->isFulfilledBy($interaction->content) &&
                 $this->throwConstraint->isFulfilledBy($interaction->throw)
             ){
-                $continueIndex = (count($interactions) - $index) * -1 + 1;
+                $remainingInteractionsCount = count($interactions) - $index - 1;
+
                 if($this->eatPreviousInteractions){
                     array_splice($interactions, 0, $index + 1, []);
                 }else{
                     array_splice($interactions, $index, 1, []);
                 }
-                return new Result($interactions, $continueIndex);
+
+                return new Result($interactions, $remainingInteractionsCount);
             }
         }
         throw new CannotFulfill($this);

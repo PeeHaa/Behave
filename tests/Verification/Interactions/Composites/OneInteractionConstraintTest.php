@@ -54,7 +54,7 @@ class OneInteractionConstraintTest extends TestCase
         $interactions = $this->remove($interactions, [1]);
 
         self::assertSame($interactions, $result->interactions);
-        self::assertSame(-1, $result->continueIndex);
+        self::assertSame(1, $result->remainingInteractionsCount);
     }
 
     function test_removes_first_only_reversed(){
@@ -73,7 +73,7 @@ class OneInteractionConstraintTest extends TestCase
         $interactions = $this->remove($interactions, [2]);
 
         self::assertSame($interactions, $result->interactions);
-        self::assertSame(-1, $result->continueIndex);
+        self::assertSame(1, $result->remainingInteractionsCount);
     }
 
     function test_remove_one(){
@@ -89,7 +89,7 @@ class OneInteractionConstraintTest extends TestCase
         $interactions = $this->remove($interactions, [0]);
 
         self::assertSame($interactions, $result->interactions);
-        self::assertSame(0, $result->continueIndex);
+        self::assertSame(0, $result->remainingInteractionsCount);
     }
 
     function test_throw(){
@@ -110,7 +110,7 @@ class OneInteractionConstraintTest extends TestCase
         $interactions = $this->remove($interactions, [0]);
 
         self::assertSame($interactions, $result->interactions);
-        self::assertSame(0, $result->continueIndex);
+        self::assertSame(0, $result->remainingInteractionsCount);
     }
 
     function test_eat(){
@@ -130,7 +130,7 @@ class OneInteractionConstraintTest extends TestCase
         $interactions = $this->remove($interactions, [0, 1, 2]);
 
         self::assertSame($interactions, $result->interactions);
-        self::assertSame(-1, $result->continueIndex);
+        self::assertSame(1, $result->remainingInteractionsCount);
     }
 
     function test_eat_all(){
@@ -150,6 +150,6 @@ class OneInteractionConstraintTest extends TestCase
         $interactions = $this->remove($interactions, [0, 1, 2, 3]);
 
         self::assertSame($interactions, $result->interactions);
-        self::assertSame(0, $result->continueIndex);
+        self::assertSame(0, $result->remainingInteractionsCount);
     }
 }

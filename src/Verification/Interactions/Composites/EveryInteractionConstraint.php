@@ -7,6 +7,7 @@ namespace Netmosfera\Behave\Verification\Interactions\Composites;
 use Error;
 use Netmosfera\Behave\Verification\Interactions\Result;
 use Netmosfera\Behave\Verification\Interactions\InteractionConstraint;
+use const PHP_INT_MAX;
 
 //[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]
 
@@ -18,7 +19,7 @@ class EveryInteractionConstraint implements InteractionConstraint
     /**
      * @TODOC
      *
-     * @var         InteractionConstraint[]                                                 `Array<Int, InteractionConstraint>`
+     * @var         InteractionConstraint[]                                                 `Array<Int{NonNegative}, InteractionConstraint>`
      */
     private $constraints;
 
@@ -32,7 +33,7 @@ class EveryInteractionConstraint implements InteractionConstraint
     /**
      * @throws
      *
-     * @param       InteractionConstraint[]                 $constraints                    `Array<Int, InteractionConstraint>`
+     * @param       InteractionConstraint[]                 $constraints                    `Array<Int{NonNegative}, InteractionConstraint>`
      * @TODOC
      *
      * @param       Bool                                    $eatPreviousInteractions        `Bool`
@@ -48,21 +49,21 @@ class EveryInteractionConstraint implements InteractionConstraint
 
     /** @inheritDoc */
     function fulfill(Array $interactions): Result{
-        $continueIndex = PHP_INT_MIN;
+        $remainingInteractionsCount = PHP_INT_MAX;
         foreach($this->constraints as $expectation){
             $result = $expectation->fulfill($interactions);
-            if($result->continueIndex > $continueIndex){
-                $continueIndex = $result->continueIndex;
+            if($result->remainingInteractionsCount < $remainingInteractionsCount){
+                $remainingInteractionsCount = $result->remainingInteractionsCount;
             }
             $interactions = $result->interactions;
         }
         if($this->eatPreviousInteractions){
-            if($continueIndex === 0){
+            if($remainingInteractionsCount === 0){
                 $interactions = [];
             }else{
-                $interactions = array_slice($interactions, $continueIndex);
+                $interactions = array_slice($interactions, $remainingInteractionsCount * -1);
             }
         }
-        return new Result($interactions, $continueIndex);
+        return new Result($interactions, $remainingInteractionsCount);
     }
 }

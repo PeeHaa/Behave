@@ -37,7 +37,7 @@ class NotInteractionConstraint implements InteractionConstraint
         try{
             $this->constraint->fulfill($interactions);
         }catch(CannotFulfill $e){
-            return new Result($interactions, count($interactions) * -1);
+            return new Result($interactions, count($interactions));
         }
         throw new CannotFulfill($this);
     }

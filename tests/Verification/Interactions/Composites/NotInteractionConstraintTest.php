@@ -27,7 +27,7 @@ class NotInteractionConstraintTest extends TestCase
         $result = not($c)->fulfill($interactions);
 
         self::assertSame($interactions, $result->interactions);
-        self::assertSame(-1, $result->continueIndex);
+        self::assertSame(1, $result->remainingInteractionsCount);
     }
 
     function test_fulfill_2(){
@@ -43,7 +43,7 @@ class NotInteractionConstraintTest extends TestCase
         $result = not($c)->fulfill($interactions);
 
         self::assertSame($interactions, $result->interactions);
-        self::assertSame(-2, $result->continueIndex);
+        self::assertSame(2, $result->remainingInteractionsCount);
     }
 
     function test_fulfill_3(){
@@ -60,7 +60,7 @@ class NotInteractionConstraintTest extends TestCase
         $result = not($c)->fulfill($interactions);
 
         self::assertSame($interactions, $result->interactions);
-        self::assertSame(-3, $result->continueIndex);
+        self::assertSame(3, $result->remainingInteractionsCount);
     }
 
     //[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]

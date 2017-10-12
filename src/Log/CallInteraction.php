@@ -25,7 +25,7 @@ class CallInteraction implements Interaction
     /**
      * The list of arguments that were used to call the function.
      *
-     * @var         Mixed[]                                                                 `Array<Int, Mixed>`
+     * @var         Mixed[]                                                                 `Array<Int{NonNegative}, Mixed>`
      */
     public $arguments;
 
@@ -47,7 +47,7 @@ class CallInteraction implements Interaction
      * @param       Closure                                 $closure                        `Closure`
      * The executed function.
      *
-     * @param       Mixed[]                                 $arguments                      `Array<Int, Mixed>`
+     * @param       Mixed[]                                 $arguments                      `Array<Int{NonNegative}, Mixed>`
      * The list of arguments that were used to call the function.
      *
      * @param       Mixed                                   $result                         `Mixed`

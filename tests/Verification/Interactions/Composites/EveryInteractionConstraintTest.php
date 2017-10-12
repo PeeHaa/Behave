@@ -6,14 +6,13 @@ namespace Netmosfera\BehaveTests\Verification\Interactions\Composites;
 
 use function array_filter;
 use function array_values;
-use Error;
 use function Netmosfera\Behave\get;
 use function Netmosfera\Behave\same;
 use function Netmosfera\Behave\every;
 use Netmosfera\Behave\Verification\Interactions\CannotFulfill;
 use Netmosfera\Behave\Log\GetInteraction;
-use Netmosfera\Behave\Verification\Interactions\InteractionConstraint;
 use PHPUnit\Framework\TestCase;
+use Error;
 
 //[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]
 
@@ -50,7 +49,7 @@ class EveryInteractionConstraintTest extends TestCase
             get("@", "@", same("@"), FALSE, FALSE),
             get("§", "§", same("§"), FALSE, FALSE),
         ], FALSE);
-        $result = $constraint->fulfill($interactions);
+        $constraint->fulfill($interactions);
     }
 
     function test_fulfill(){
@@ -64,7 +63,7 @@ class EveryInteractionConstraintTest extends TestCase
         $result = $constraint->fulfill($interactions);
 
         self::assertSame([], $result->interactions);
-        self::assertSame(0, $result->continueIndex);
+        self::assertSame(0, $result->remainingInteractionsCount);
     }
 
     function test_fulfill_reversed_order(){
@@ -78,7 +77,7 @@ class EveryInteractionConstraintTest extends TestCase
         $result = $constraint->fulfill($interactions);
 
         self::assertSame([], $result->interactions);
-        self::assertSame(0, $result->continueIndex);
+        self::assertSame(0, $result->remainingInteractionsCount);
     }
 
     //[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]
@@ -98,7 +97,7 @@ class EveryInteractionConstraintTest extends TestCase
         $interactions = $this->remove($interactions, [0, 1]);
 
         self::assertSame($interactions, $result->interactions);
-        self::assertSame(-2, $result->continueIndex);
+        self::assertSame(2, $result->remainingInteractionsCount);
     }
 
     function test_fulfill_adjacent_1_more(){
@@ -116,7 +115,7 @@ class EveryInteractionConstraintTest extends TestCase
         $interactions = $this->remove($interactions, [1, 2]);
 
         self::assertSame($interactions, $result->interactions);
-        self::assertSame(-1, $result->continueIndex);
+        self::assertSame(1, $result->remainingInteractionsCount);
     }
 
     function test_fulfill_adjacent_0_more(){
@@ -134,7 +133,7 @@ class EveryInteractionConstraintTest extends TestCase
         $interactions = $this->remove($interactions, [2, 3]);
 
         self::assertSame($interactions, $result->interactions);
-        self::assertSame(0, $result->continueIndex);
+        self::assertSame(0, $result->remainingInteractionsCount);
     }
 
     //[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]
@@ -155,7 +154,7 @@ class EveryInteractionConstraintTest extends TestCase
         $interactions = $this->remove($interactions, [0, 2]);
 
         self::assertSame($interactions, $result->interactions);
-        self::assertSame(-2, $result->continueIndex);
+        self::assertSame(2, $result->remainingInteractionsCount);
     }
 
     function test_fulfill_nonadjacent_1_more(){
@@ -174,7 +173,7 @@ class EveryInteractionConstraintTest extends TestCase
         $interactions = $this->remove($interactions, [1, 3]);
 
         self::assertSame($interactions, $result->interactions);
-        self::assertSame(-1, $result->continueIndex);
+        self::assertSame(1, $result->remainingInteractionsCount);
     }
 
     function test_fulfill_nonadjacent_0_more(){
@@ -193,7 +192,7 @@ class EveryInteractionConstraintTest extends TestCase
         $interactions = $this->remove($interactions, [2, 4]);
 
         self::assertSame($interactions, $result->interactions);
-        self::assertSame(0, $result->continueIndex);
+        self::assertSame(0, $result->remainingInteractionsCount);
     }
 
     //[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]
@@ -213,7 +212,7 @@ class EveryInteractionConstraintTest extends TestCase
         $interactions = $this->remove($interactions, [0, 1]);
 
         self::assertSame($interactions, $result->interactions);
-        self::assertSame(-2, $result->continueIndex);
+        self::assertSame(2, $result->remainingInteractionsCount);
     }
 
     function test_fulfill_adjacent_reversed_1_more(){
@@ -231,7 +230,7 @@ class EveryInteractionConstraintTest extends TestCase
         $interactions = $this->remove($interactions, [1, 2]);
 
         self::assertSame($interactions, $result->interactions);
-        self::assertSame(-1, $result->continueIndex);
+        self::assertSame(1, $result->remainingInteractionsCount);
     }
 
     function test_fulfill_adjacent_reversed_0_more(){
@@ -249,7 +248,7 @@ class EveryInteractionConstraintTest extends TestCase
         $interactions = $this->remove($interactions, [2, 3]);
 
         self::assertSame($interactions, $result->interactions);
-        self::assertSame(0, $result->continueIndex);
+        self::assertSame(0, $result->remainingInteractionsCount);
     }
 
     //[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]
@@ -270,7 +269,7 @@ class EveryInteractionConstraintTest extends TestCase
         $interactions = $this->remove($interactions, [0, 2]);
 
         self::assertSame($interactions, $result->interactions);
-        self::assertSame(-2, $result->continueIndex);
+        self::assertSame(2, $result->remainingInteractionsCount);
     }
 
     function test_fulfill_nonadjacent_reversed_1_more(){
@@ -289,7 +288,7 @@ class EveryInteractionConstraintTest extends TestCase
         $interactions = $this->remove($interactions, [1, 3]);
 
         self::assertSame($interactions, $result->interactions);
-        self::assertSame(-1, $result->continueIndex);
+        self::assertSame(1, $result->remainingInteractionsCount);
     }
 
     function test_fulfill_nonadjacent_reversed_0_more(){
@@ -308,7 +307,7 @@ class EveryInteractionConstraintTest extends TestCase
         $interactions = $this->remove($interactions, [2, 4]);
 
         self::assertSame($interactions, $result->interactions);
-        self::assertSame(0, $result->continueIndex);
+        self::assertSame(0, $result->remainingInteractionsCount);
     }
 
     //[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]
@@ -328,7 +327,7 @@ class EveryInteractionConstraintTest extends TestCase
         $interactions = $this->remove($interactions, [0, 1]);
 
         self::assertSame($interactions, $result->interactions);
-        self::assertSame(-2, $result->continueIndex);
+        self::assertSame(2, $result->remainingInteractionsCount);
     }
 
     function test_fulfill_adjacent_1_more_eat(){
@@ -346,7 +345,7 @@ class EveryInteractionConstraintTest extends TestCase
         $interactions = $this->remove($interactions, [0, 1, 2]);
 
         self::assertSame($interactions, $result->interactions);
-        self::assertSame(-1, $result->continueIndex);
+        self::assertSame(1, $result->remainingInteractionsCount);
     }
 
     function test_fulfill_adjacent_0_more_eat(){
@@ -364,7 +363,7 @@ class EveryInteractionConstraintTest extends TestCase
         $interactions = $this->remove($interactions, [0, 1, 2, 3]);
 
         self::assertSame($interactions, $result->interactions);
-        self::assertSame(0, $result->continueIndex);
+        self::assertSame(0, $result->remainingInteractionsCount);
     }
 
     //[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]
@@ -385,7 +384,7 @@ class EveryInteractionConstraintTest extends TestCase
         $interactions = $this->remove($interactions, [0, 1, 2]);
 
         self::assertSame($interactions, $result->interactions);
-        self::assertSame(-2, $result->continueIndex);
+        self::assertSame(2, $result->remainingInteractionsCount);
     }
 
     function test_fulfill_nonadjacent_1_more_eat(){
@@ -404,7 +403,7 @@ class EveryInteractionConstraintTest extends TestCase
         $interactions = $this->remove($interactions, [0, 1, 2, 3]);
 
         self::assertSame($interactions, $result->interactions);
-        self::assertSame(-1, $result->continueIndex);
+        self::assertSame(1, $result->remainingInteractionsCount);
     }
 
     function test_fulfill_nonadjacent_0_more_eat(){
@@ -423,7 +422,7 @@ class EveryInteractionConstraintTest extends TestCase
         $interactions = $this->remove($interactions, [0, 1, 2, 3, 4]);
 
         self::assertSame($interactions, $result->interactions);
-        self::assertSame(0, $result->continueIndex);
+        self::assertSame(0, $result->remainingInteractionsCount);
     }
 
     //[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]
@@ -443,7 +442,7 @@ class EveryInteractionConstraintTest extends TestCase
         $interactions = $this->remove($interactions, [0, 1]);
 
         self::assertSame($interactions, $result->interactions);
-        self::assertSame(-2, $result->continueIndex);
+        self::assertSame(2, $result->remainingInteractionsCount);
     }
 
     function test_fulfill_adjacent_reversed_1_more_eat(){
@@ -461,7 +460,7 @@ class EveryInteractionConstraintTest extends TestCase
         $interactions = $this->remove($interactions, [0, 1, 2]);
 
         self::assertSame($interactions, $result->interactions);
-        self::assertSame(-1, $result->continueIndex);
+        self::assertSame(1, $result->remainingInteractionsCount);
     }
 
     function test_fulfill_adjacent_reversed_0_more_eat(){
@@ -479,7 +478,7 @@ class EveryInteractionConstraintTest extends TestCase
         $interactions = $this->remove($interactions, [0, 1, 2, 3]);
 
         self::assertSame($interactions, $result->interactions);
-        self::assertSame(0, $result->continueIndex);
+        self::assertSame(0, $result->remainingInteractionsCount);
     }
 
     //[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]
@@ -500,7 +499,7 @@ class EveryInteractionConstraintTest extends TestCase
         $interactions = $this->remove($interactions, [0, 1, 2]);
 
         self::assertSame($interactions, $result->interactions);
-        self::assertSame(-2, $result->continueIndex);
+        self::assertSame(2, $result->remainingInteractionsCount);
     }
 
     function test_fulfill_nonadjacent_reversed_1_more_eat(){
@@ -519,7 +518,7 @@ class EveryInteractionConstraintTest extends TestCase
         $interactions = $this->remove($interactions, [0, 1, 2, 3]);
 
         self::assertSame($interactions, $result->interactions);
-        self::assertSame(-1, $result->continueIndex);
+        self::assertSame(1, $result->remainingInteractionsCount);
     }
 
     function test_fulfill_nonadjacent_reversed_0_more_eat(){
@@ -538,6 +537,6 @@ class EveryInteractionConstraintTest extends TestCase
         $interactions = $this->remove($interactions, [0, 1, 2, 3, 4]);
 
         self::assertSame($interactions, $result->interactions);
-        self::assertSame(0, $result->continueIndex);
+        self::assertSame(0, $result->remainingInteractionsCount);
     }
 }

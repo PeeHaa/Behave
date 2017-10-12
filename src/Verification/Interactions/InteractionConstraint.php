@@ -16,7 +16,7 @@ interface InteractionConstraint
     /**
      * @TODOC
      *
-     * @param       Interaction[]                           $interactions                   `Array<@TODO>`
+     * @param       Interaction[]                           $interactions                   `Array<Int{NonNegative}, Interaction>`
      * @TODOC
      *
      * @throws      CannotFulfill                                                           `CannotFulfill`

@@ -28,7 +28,7 @@ class CallInteractionConstraint implements InteractionConstraint
     /**
      * @TODOC
      *
-     * @var         ObjectConstraint[]                                                      `Array<Int, ObjectConstraint>`
+     * @var         ObjectConstraint[]                                                      `Array<Int{NonNegative}, ObjectConstraint>`
      */
     private $argumentsConstraints;
 
@@ -57,7 +57,7 @@ class CallInteractionConstraint implements InteractionConstraint
      * @param       Closure                                 $closure                        `Closure`
      * @TODOC
      *
-     * @param       ObjectConstraint[]                      $argumentsConstraints           `Array<Int, ObjectConstraint>`
+     * @param       ObjectConstraint[]                      $argumentsConstraints           `Array<Int{NonNegative}, ObjectConstraint>`
      * @TODOC
      *
      * @param       ObjectConstraint                        $resultConstraint               `ObjectConstraint`
@@ -93,7 +93,7 @@ class CallInteractionConstraint implements InteractionConstraint
                 $interaction->resultWasThrown === $this->resultIsThrown &&
                 $this->returnConstraint->isFulfilledBy($interaction->result)
             ){
-                $continueIndex = (count($interactions) - $index) * -1 + 1;
+                $remainingInteractionsCount = count($interactions) - $index - 1;
 
                 if($this->eatPreviousInteractions){
                     array_splice($interactions, 0, $index + 1, []);
@@ -101,7 +101,7 @@ class CallInteractionConstraint implements InteractionConstraint
                     array_splice($interactions, $index, 1, []);
                 }
 
-                return new Result($interactions, $continueIndex);
+                return new Result($interactions, $remainingInteractionsCount);
             }
         }
         throw new CannotFulfill($this);

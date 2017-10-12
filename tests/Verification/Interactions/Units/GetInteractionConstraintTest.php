@@ -79,7 +79,7 @@ class GetInteractionConstraintTest extends TestCase
         $result = $constraint->fulfill($interactions);
 
         self::assertSame([], $result->interactions);
-        self::assertSame(0, $result->continueIndex);
+        self::assertSame(0, $result->remainingInteractionsCount);
     }
 
     //[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]
@@ -96,7 +96,7 @@ class GetInteractionConstraintTest extends TestCase
         array_splice($interactions, 0, 1, []);
 
         self::assertSame($interactions, $result->interactions);
-        self::assertSame(-3, $result->continueIndex);
+        self::assertSame(3, $result->remainingInteractionsCount);
     }
 
     function test_fulfill_position_1(){
@@ -111,7 +111,7 @@ class GetInteractionConstraintTest extends TestCase
         array_splice($interactions, 1, 1, []);
 
         self::assertSame($interactions, $result->interactions);
-        self::assertSame(-2, $result->continueIndex);
+        self::assertSame(2, $result->remainingInteractionsCount);
     }
 
     function test_fulfill_position_2(){
@@ -126,7 +126,7 @@ class GetInteractionConstraintTest extends TestCase
         array_splice($interactions, 2, 1, []);
 
         self::assertSame($interactions, $result->interactions);
-        self::assertSame(-1, $result->continueIndex);
+        self::assertSame(1, $result->remainingInteractionsCount);
     }
 
     function test_fulfill_position_3(){
@@ -141,7 +141,7 @@ class GetInteractionConstraintTest extends TestCase
         array_splice($interactions, 3, 1, []);
 
         self::assertSame($interactions, $result->interactions);
-        self::assertSame(0, $result->continueIndex);
+        self::assertSame(0, $result->remainingInteractionsCount);
     }
 
     //[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]
@@ -158,7 +158,7 @@ class GetInteractionConstraintTest extends TestCase
         array_splice($interactions, 0, 1, []);
 
         self::assertSame($interactions, $result->interactions);
-        self::assertSame(-3, $result->continueIndex);
+        self::assertSame(3, $result->remainingInteractionsCount);
     }
 
     function test_fulfill_eat_position_1(){
@@ -173,7 +173,7 @@ class GetInteractionConstraintTest extends TestCase
         array_splice($interactions, 0, 2, []);
 
         self::assertSame($interactions, $result->interactions);
-        self::assertSame(-2, $result->continueIndex);
+        self::assertSame(2, $result->remainingInteractionsCount);
     }
 
     function test_fulfill_eat_position_2(){
@@ -188,7 +188,7 @@ class GetInteractionConstraintTest extends TestCase
         array_splice($interactions, 0, 3, []);
 
         self::assertSame($interactions, $result->interactions);
-        self::assertSame(-1, $result->continueIndex);
+        self::assertSame(1, $result->remainingInteractionsCount);
     }
 
     function test_fulfill_eat_position_3(){
@@ -203,6 +203,6 @@ class GetInteractionConstraintTest extends TestCase
         array_splice($interactions, 0, 4, []);
 
         self::assertSame($interactions, $result->interactions);
-        self::assertSame(0, $result->continueIndex);
+        self::assertSame(0, $result->remainingInteractionsCount);
     }
 }
